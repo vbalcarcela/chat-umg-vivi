@@ -1,0 +1,153 @@
+:root{
+  --primary:#0057ff;
+  --primary-dark:#0041c4;
+  --bg:#0f172a;
+  --card:#ffffff;
+  --text:#1e293b;
+  --text-light:#64748b;
+  --border:#dbe2ea;
+}
+
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+}
+
+body{
+  font-family:'IBM Plex Sans',sans-serif;
+  min-height:100vh;
+  background:linear-gradient(135deg,#0f172a,#1e3a8a);
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  padding:20px;
+}
+
+.login-wrap,
+.chat-wrap{
+  width:100%;
+  display:flex;
+  justify-content:center;
+}
+
+.login-card{
+  width:100%;
+  max-width:520px;
+  background:#fff;
+  padding:50px;
+  border-radius:30px;
+  box-shadow:0 20px 50px rgba(0,0,0,.25);
+}
+
+.kicker{
+  color:var(--primary);
+  font-weight:700;
+  margin-bottom:15px;
+}
+
+h1{
+  font-family:'Fraunces',serif;
+  font-size:4rem;
+  margin-bottom:15px;
+}
+
+h1 span{
+  color:var(--primary);
+}
+
+.subtitle{
+  color:var(--text-light);
+  margin-bottom:35px;
+  font-size:1.2rem;
+}
+
+.field{
+  margin-bottom:25px;
+}
+
+.field label{
+  display:block;
+  margin-bottom:10px;
+  font-weight:600;
+}
+
+.field input{
+  width:100%;
+  padding:15px;
+  border:2px solid var(--border);
+  border-radius:15px;
+  font-size:16px;
+}
+
+.field small{
+  color:var(--text-light);
+}
+
+.btn-primary{
+  width:100%;
+  padding:16px;
+  border:none;
+  border-radius:15px;
+  background:var(--primary);
+  color:white;
+  font-weight:700;
+  cursor:pointer;
+}
+
+.btn-primary:hover{
+  background:var(--primary-dark);
+}
+
+.msg{
+  text-align:center;
+  margin-top:15px;
+}
+
+.chat-wrap{
+  max-width:1000px;
+  background:white;
+  border-radius:25px;
+  overflow:hidden;
+  box-shadow:0 20px 50px rgba(0,0,0,.25);
+}
+
+.topbar{
+  padding:25px;
+  border-bottom:1px solid var(--border);
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+}
+
+.btn-ghost{
+  padding:12px 20px;
+  border:none;
+  border-radius:12px;
+  cursor:pointer;
+}
+
+.chat-body{
+  padding:30px;
+  display:flex;
+  flex-direction:column;
+  gap:20px;
+}
+
+.chat-body textarea{
+  width:100%;
+  min-height:120px;
+  padding:15px;
+  border:2px solid var(--border);
+  border-radius:14px;
+  resize:none;
+}
+
+.chat-body .btn-primary{
+  width:220px;
+}
+
+#vistaLogin[hidden],
+#vistaChat[hidden]{
+  display:none !important;
+}
