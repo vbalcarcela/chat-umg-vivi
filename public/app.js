@@ -13,6 +13,12 @@ const chatMsg = $("chatMsg");
 const KEY_TOKEN = "umg_token";
 const KEY_USER = "umg_usuario";
 
+const API_LOGIN =
+  "https://backcvbgtmdesa.azurewebsites.net/api/login/authenticate";
+
+const API_MENSAJES =
+  "https://backcvbgtmdesa.azurewebsites.net/api/Mensajes";
+
 /* ===================================================================== */
 /* UTILIDADES */
 /* ===================================================================== */
@@ -54,7 +60,7 @@ function extraerToken(data) {
 }
 
 /* ===================================================================== */
-/* SERIE I - LOGIN */
+/* LOGIN */
 /* ===================================================================== */
 
 async function login() {
@@ -72,7 +78,7 @@ async function login() {
   setMsg(loginMsg, "Verificando credenciales...");
 
   try {
-    const response = await fetch("/api/auth", {
+    const response = await fetch(API_LOGIN, {
       method: "POST",
       headers: {
         "Content-Type": "application/json"
@@ -83,21 +89,17 @@ async function login() {
       })
     });
 
-    let data = {};
+    const data = await response.json();
 
-    try {
-      data = await response.json();
-    } catch {
-      data = {};
-    }
-
-    console.log("STATUS:", response.status);
-    console.log("DATA:", data);
+    console.log("LOGIN STATUS:", response.status);
+    console.log("LOGIN DATA:", data);
 
     if (!response.ok) {
       setMsg(
         loginMsg,
-        data.error || "Usuario o contraseña incorrectos.",
+        data.msgRespuesta ||
+          data.error ||
+          "Usuario o contraseña incorrectos.",
         "error"
       );
       return;
@@ -110,7 +112,7 @@ async function login() {
 
       setMsg(
         loginMsg,
-        "No se recibió el token de autenticación.",
+        "No se recibió token de autenticación.",
         "error"
       );
       return;
@@ -122,11 +124,12 @@ async function login() {
     entrarAlChat();
 
   } catch (error) {
+
     console.error(error);
 
     setMsg(
       loginMsg,
-      "Error al conectar con el servidor.",
+      "Error al conectar con la API.",
       "error"
     );
   } finally {
@@ -135,10 +138,11 @@ async function login() {
 }
 
 /* ===================================================================== */
-/* SERIE II - ENVIAR MENSAJE */
+/* MENSAJES */
 /* ===================================================================== */
 
 async function enviarMensaje() {
+
   const contenido = $("contenido").value.trim();
 
   if (!contenido) {
@@ -152,7 +156,8 @@ async function enviarMensaje() {
   setMsg(chatMsg, "Enviando mensaje...");
 
   try {
-    const response = await fetch("/api/mensajes", {
+
+    const response = await fetch(API_MENSAJES, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -165,13 +170,7 @@ async function enviarMensaje() {
       })
     });
 
-    let data = {};
-
-    try {
-      data = await response.json();
-    } catch {
-      data = {};
-    }
+    const data = await response.json();
 
     console.log("MENSAJE STATUS:", response.status);
     console.log("MENSAJE DATA:", data);
@@ -179,7 +178,9 @@ async function enviarMensaje() {
     if (!response.ok) {
       setMsg(
         chatMsg,
-        data.error || "No fue posible enviar el mensaje.",
+        data.error ||
+          data.msgRespuesta ||
+          "No fue posible enviar el mensaje.",
         "error"
       );
       return;
@@ -194,13 +195,15 @@ async function enviarMensaje() {
     );
 
   } catch (error) {
+
     console.error(error);
 
     setMsg(
       chatMsg,
-      "Error al enviar el mensaje.",
+      "Error al enviar mensaje.",
       "error"
     );
+
   } finally {
     btn.disabled = false;
   }
@@ -211,6 +214,7 @@ async function enviarMensaje() {
 /* ===================================================================== */
 
 function entrarAlChat() {
+
   vistaLogin.hidden = true;
   vistaChat.hidden = false;
 
@@ -224,14 +228,15 @@ function entrarAlChat() {
 }
 
 function logout() {
+
   localStorage.removeItem(KEY_TOKEN);
   localStorage.removeItem(KEY_USER);
 
   vistaChat.hidden = true;
   vistaLogin.hidden = false;
 
-  $("password").value = "";
   $("usuario").value = "";
+  $("password").value = "";
 
   setMsg(loginMsg, "");
   setMsg(chatMsg, "");
@@ -265,6 +270,7 @@ $("btnLogout").addEventListener("click", logout);
 const textarea = $("contenido");
 
 if (textarea) {
+
   textarea.addEventListener("input", () => {
     autoResize(textarea);
   });

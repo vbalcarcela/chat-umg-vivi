@@ -13,6 +13,21 @@ const API_MENSAJES =
   "https://backcvbgtmdesa.azurewebsites.net/api/Mensajes";
 
 /* =====================================================
+   RUTAS DE PRUEBA
+===================================================== */
+
+app.get("/ping", (req, res) => {
+  res.send("Servidor funcionando correctamente");
+});
+
+app.get("/api/auth", (req, res) => {
+  res.json({
+    mensaje: "API funcionando correctamente",
+    metodoPermitido: "POST"
+  });
+});
+
+/* =====================================================
    SERIE I - LOGIN
 ===================================================== */
 
@@ -23,8 +38,8 @@ app.post("/api/auth", async (req, res) => {
     console.log("");
     console.log("==================================");
     console.log("PETICION LOGIN");
-    console.log("USERNAME:", JSON.stringify(Username));
-    console.log("PASSWORD:", JSON.stringify(Password));
+    console.log("USERNAME:", Username);
+    console.log("PASSWORD:", Password);
     console.log("==================================");
 
     if (!Username || !Password) {
@@ -148,7 +163,7 @@ app.post("/api/mensajes", async (req, res) => {
 });
 
 /* =====================================================
-   RUTA PRINCIPAL
+   PAGINA PRINCIPAL
 ===================================================== */
 
 app.get("/", (req, res) => {
@@ -156,7 +171,7 @@ app.get("/", (req, res) => {
 });
 
 /* =====================================================
-   INICIO
+   INICIO SERVIDOR
 ===================================================== */
 
 const PORT = process.env.PORT || 3000;
@@ -165,7 +180,7 @@ app.listen(PORT, () => {
   console.log("");
   console.log("==================================");
   console.log("SERVIDOR INICIADO");
-  console.log(`http://localhost:${PORT}`);
+  console.log(`PUERTO: ${PORT}`);
   console.log("==================================");
   console.log("");
 });
